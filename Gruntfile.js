@@ -1,95 +1,92 @@
-'use strict';
-
 module.exports = function(grunt) {
 
-    grunt.initConfig({
+  'use strict';
 
-        pkg: grunt.file.readJSON('package.json'),
+  grunt.initConfig({
 
-        jshint: {
-            options: {
-                boss: true,
-                browser: true,
-                expr: true,
-                eqnull: true,
-                latedef: true,
-                newcap: false,
-                node: true,
-                strict: false,
-                supernew: true,
-                sub: true,
-                trailing: true,
-                undef: true
-            },
+    pkg: grunt.file.readJSON('package.json'),
 
-            src: ['backbone.js'],
-            node: ['index.js']
+    jshint: {
+        options: {
+            boss: true,
+            browser: true,
+            expr: true,
+            eqnull: true,
+            latedef: true,
+            newcap: false,
+            node: true,
+            strict: false,
+            supernew: true,
+            sub: true,
+            trailing: true,
+            undef: true
         },
 
-        uglify: {
-            options: {
-                banner: '//     Backbone.js <%= pkg.version %>'+ '\n' +
-                        '//     <%= pkg.url %>' + '\n' +
-                        '//     (c) 2009-2013 Jeremy Ashkenas, DocumentCloud Inc.' + '\n' +
-                        '//     Backbone may be freely distributed under the MIT license.'
-            },
+        src: ['backbone.js'],
+        node: ['index.js']
+    },
 
-            src: {
-                'backbone-min.js': ['backbone.js']
-            }
+    uglify: {
+      all: {
+        files: {
+          'backbone-min.js': ['backbone.js']
         },
-
-        qunit: {
-            all: ['test/**/index.html']
-        },
-
-        docco: {
-            annotated: {
-                src: ['backbone.js', 'examples/todos/todos.js', 'examples/backbone-localstorage.js'],
-                options: {
-                    output: 'docs/'
-                }
-            }
-        },
-
-        coffee: {
-            tests: {
-                expand: true,
-                cwd: 'test',
-                src: ['*.coffee'],
-                dest: 'test/compiled/',
-                ext: '.js'
-            }
-        },
-
-        clean: ['test/compiled'],
-        
-        watch: {
-            src: {
-                files: ['backbone.js', 'test/*.js', 'test/coffee.js'],
-                tasks: ['coffee', 'jshint', 'qunit', 'clean', 'uglify']
-            }
+        options: {
+          banner: '//     Backbone.js <%= pkg.version %>'+ '\n' +
+                  '//     <%= pkg.url %>' + '\n' +
+                  '//     (c) 2009-2013 Jeremy Ashkenas, DocumentCloud Inc.' + '\n' +
+                  '//     Backbone may be freely distributed under the MIT license.',
+          sourceMap: "backbone-min.map",
+          beautify: {
+            ascii_only: true
+          }
         }
+      }
+    },
 
-    });
-    
-    grunt.registerTask('test', ['jshint', 'coffee', 'qunit', 'clean']);
+    qunit: {
+      all: ['test/**/index.html']
+    },
 
-    grunt.registerTask('docs', ['docco']);
+    docco: {
+      annotated: {
+        src: ['backbone.js', 'examples/todos/todos.js', 'examples/backbone-localstorage.js'],
+        options: {
+          output: 'docs/'
+        }
+      }
+    },
 
-    grunt.loadNpmTasks('grunt-docco');
+    coffee: {
+      tests: {
+        expand: true,
+        cwd: 'test',
+        src: ['*.coffee'],
+        dest: 'test/compiled/',
+        ext: '.js'
+      }
+    },
 
-    grunt.loadNpmTasks('grunt-contrib-coffee');
+    clean: ['test/compiled'],
 
-    grunt.loadNpmTasks('grunt-contrib-clean');
+    watch: {
+      src: {
+        files: ['backbone.js', 'test/*.js', 'test/coffee.js'],
+        tasks: ['coffee', 'jshint', 'qunit', 'clean', 'uglify']
+      }
+    }
 
-    grunt.loadNpmTasks('grunt-contrib-qunit');
+  });
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    
-    grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.registerTask('test', ['jshint', 'coffee', 'qunit', 'clean']);
+  grunt.registerTask('release', ['test', 'docco', 'uglify']);
 
-    grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-docco');
+  grunt.loadNpmTasks('grunt-contrib-coffee');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-qunit');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+};
 
-
-}
