@@ -32,10 +32,11 @@ module.exports = function(grunt) {
           'backbone-min.js': ['backbone.js']
         },
         options: {
-          banner: '//     Backbone.js <%= pkg.version %>'+ '\n' +
-                  '//     <%= pkg.url %>' + '\n' +
-                  '//     (c) 2009-2013 Jeremy Ashkenas, DocumentCloud Inc.' + '\n' +
-                  '//     Backbone may be freely distributed under the MIT license.',
+          banner: '// Backbone.js <%= pkg.version %>\n\n' +
+                  '// (c) 2010-2013 Jeremy Ashkenas, DocumentCloud Inc.\n' +
+                  '// Backbone may be freely distributed under the MIT license.\n' +
+                  '// For all details and documentation:\n'+
+                  '// http://backbonejs.org\n',
           sourceMap: "backbone-min.map",
           beautify: {
             ascii_only: true
