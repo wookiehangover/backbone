@@ -17,8 +17,9 @@
 
   // Next for Node.js or CommonJS. jQuery may not be needed as a module.
   } else if (typeof exports !== 'undefined') {
-    var _ = require('underscore');
-    factory(root, exports, _);
+    var _ = require('lodash');
+    var $ = require('jquery');
+    factory(root, exports, _, jquery);
 
   // Finally, as a browser global.
   } else {
